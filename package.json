@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "seed": "ts-node src/seed/seed-database.ts",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "vercel-build": "npx prisma migrate deploy && next build && ts-node src/seed/seed-database.ts",
     "postinstall": "prisma generate"
   },
   "dependencies": {
