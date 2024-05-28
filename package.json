@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node src/seed/seed-database.ts"
+    "seed": "ts-node src/seed/seed-database.ts",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@emailjs/browser": "^4.3.3",
