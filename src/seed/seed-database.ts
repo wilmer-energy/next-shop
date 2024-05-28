@@ -4,7 +4,7 @@ import { countries } from './seed-countries';
 
 
 
-async function main() {
+export default async function main() {
 
   // 1. Borrar registros previos
   // await Promise.all( [
@@ -97,10 +97,10 @@ async function main() {
 
 
 
-( () => {
+/*( () => {
 
   if ( process.env.NODE_ENV === 'production' ) return;
 
 
   main();
-} )();
+} )();*/
