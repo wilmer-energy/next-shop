@@ -28,9 +28,9 @@ export default function CartPage() {
 
           {/* Carrito */ }
           <div className="flex flex-col mt-5">
-            <span className="text-xl">Agregar más items</span>
+            <span className="text-xl">Add more products</span>
             <Link href="/" className="underline mb-5">
-              Continúa comprando
+              Continue buying
             </Link>
          
 
@@ -45,7 +45,7 @@ export default function CartPage() {
 
           {/* Checkout - Resumen de orden */ }
           <div className="bg-white rounded-xl shadow-xl p-7 h-fit">
-            <h2 className="text-2xl mb-2">Resumen de orden</h2>
+            <h2 className="text-2xl mb-2">Order review</h2>
 
             <OrderSummary />
 

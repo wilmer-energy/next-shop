@@ -46,7 +46,7 @@ export const AddToCart = ({ product }: Props) => {
     <>
       {posted && !size && (
         <span className="mt-2 text-red-500 fade-in">
-          Debe de seleccionar una talla*
+          Select a size*
         </span>
       )}
 
@@ -62,7 +62,7 @@ export const AddToCart = ({ product }: Props) => {
 
       {/* Button */}
       <button onClick={addToCart} className="btn-primary my-5">
-        Agregar al carrito
+        Add to cart
       </button>
     </>
   );

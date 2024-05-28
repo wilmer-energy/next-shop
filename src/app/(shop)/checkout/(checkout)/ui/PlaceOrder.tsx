@@ -22,19 +22,19 @@ export const PlaceOrder = () => {
   const { itemsInCart, subTotal, tax, total } = useCartStore((state) =>
     state.getSummaryInformation()
   );
-  const cart = useCartStore( state => state.cart );
-  const clearCart = useCartStore( state => state.clearCart );
+  const cart = useCartStore(state => state.cart);
+  const clearCart = useCartStore(state => state.clearCart);
 
   useEffect(() => {
     setLoaded(true);
   }, []);
 
 
-  const onPlaceOrder = async() => {
+  const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
     // await sleep(2);
 
-    const productsToOrder = cart.map( product => ({
+    const productsToOrder = cart.map(product => ({
       productId: product.id,
       quantity: product.quantity,
       size: product.size,
@@ -42,8 +42,8 @@ export const PlaceOrder = () => {
 
 
     //! Server Action
-    const resp = await placeOrder( productsToOrder, address);
-    if ( !resp.ok ) {
+    const resp = await placeOrder(productsToOrder, address);
+    if (!resp.ok) {
       setIsPlacingOrder(false);
       setErrorMessage(resp.message);
       return;
@@ -51,7 +51,7 @@ export const PlaceOrder = () => {
 
     //* Todo salio bien!
     clearCart();
-    router.replace('/orders/' + resp.order?.id );
+    router.replace('/orders/' + resp.order?.id);
 
 
   }
@@ -82,10 +82,10 @@ export const PlaceOrder = () => {
       {/* Divider */}
       <div className="w-full h-0.5 rounded bg-gray-200 mb-10" />
 
-      <h2 className="text-2xl mb-2">Resumen de orden</h2>
+      <h2 className="text-2xl mb-2">Order Review</h2>
 
       <div className="grid grid-cols-2">
-        <span>No. Productos</span>
+        <span>No. Products</span>
         <span className="text-right">
           {itemsInCart === 1 ? "1 artículo" : `${itemsInCart} artículos`}
         </span>
@@ -93,7 +93,7 @@ export const PlaceOrder = () => {
         <span>Subtotal</span>
         <span className="text-right">{currencyFormat(subTotal)}</span>
 
-        <span>Impuestos (15%)</span>
+        <span>Taxes (15%)</span>
         <span className="text-right">{currencyFormat(tax)}</span>
 
         <span className="mt-5 text-2xl">Total:</span>
@@ -106,23 +106,23 @@ export const PlaceOrder = () => {
         <p className="mb-5">
           {/* Disclaimer */}
           <span className="text-xs">
-            Al hacer clic en &quot;Colocar orden&quot;, aceptas nuestros{" "}
+            Clicking &quot;Place order&quot;, you are agree with ours{" "}
             <a href="#" className="underline">
-              términos y condiciones
+              Termns and conditions
             </a>{" "}
-            y{" "}
+            &{" "}
             <a href="#" className="underline">
-              política de privacidad
+              Privacy Policy
             </a>
           </span>
         </p>
 
 
-        <p className="text-red-500">{ errorMessage }</p>
+        <p className="text-red-500">{errorMessage}</p>
 
         <button
           // href="/orders/123"
-          onClick={ onPlaceOrder }
+          onClick={onPlaceOrder}
           className={
             clsx({
               'btn-primary': !isPlacingOrder,
@@ -130,7 +130,7 @@ export const PlaceOrder = () => {
             })
           }
         >
-          Colocar orden
+          Place Order
         </button>
       </div>
     </div>

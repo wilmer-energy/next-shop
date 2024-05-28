@@ -30,8 +30,8 @@ export default async function Home({ searchParams }: Props) {
   return (
     <>
       <Title
-        title="Tienda"
-        subtitle="Todos los productos"
+        title="Store"
+        subtitle="All products"
         className="mb-2"
       />
 
