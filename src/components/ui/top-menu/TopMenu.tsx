@@ -27,7 +27,10 @@ const navigation = [
   { name: 'Kids', href: "/gender/kid", current: false }
 ]
 
-function classNames(...classes): string {
+function classNames(classes: string | string[]): string {
+  if (typeof classes == "string") {
+    return classes;
+  }
   return classes.filter(Boolean).join(' ')
 }
 
@@ -71,8 +74,7 @@ export default function TopMenu() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          item.current ? 'bg-gray-900 text-white' : ['text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
@@ -141,7 +143,7 @@ export default function TopMenu() {
                             {({ focus }) => (
                               <Link
                                 href="/profile"
-                                className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(focus ? 'bg-gray-100' : ['', 'block px-4 py-2 text-sm text-gray-700'])}
                               >
                                 Profile
                               </Link>
@@ -151,7 +153,7 @@ export default function TopMenu() {
                             {({ focus }) => (
                               <Link
                                 href="/orders"
-                                className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(focus ? 'bg-gray-100' : ['', 'block px-4 py-2 text-sm text-gray-700'])}
                               >
                                 Orders
                               </Link>
@@ -161,7 +163,7 @@ export default function TopMenu() {
                             {({ focus }) => (
                               <button
                                 onClick={() => logout()}
-                                className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(focus ? 'bg-gray-100' : ['', 'block px-4 py-2 text-sm text-gray-700'])}
                               >
                                 Log out
                               </button>
@@ -173,7 +175,7 @@ export default function TopMenu() {
                           {({ focus }) => (
                             <Link
                               href="/auth/login"
-                              className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                              className={classNames(focus ? 'bg-gray-100' : ['', 'block px-4 py-2 text-sm text-gray-700'])}
                             >
                               Sign in
                             </Link>
@@ -187,7 +189,7 @@ export default function TopMenu() {
                             {({ focus }) => (
                               <Link
                                 href="/admin/products"
-                                className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(focus ? 'bg-gray-100' : ['', 'block px-4 py-2 text-sm text-gray-700'])}
                               >
                                 Products
                               </Link>
@@ -197,7 +199,7 @@ export default function TopMenu() {
                             {({ focus }) => (
                               <Link
                                 href="/admin/orders"
-                                className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(focus ? 'bg-gray-100' : ['', 'block px-4 py-2 text-sm text-gray-700'])}
                               >
                                 Orders
                               </Link>
@@ -207,7 +209,7 @@ export default function TopMenu() {
                             {({ focus }) => (
                               <Link
                                 href="/admin/users"
-                                className={classNames(focus ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                className={classNames(focus ? 'bg-gray-100' : ['', 'block px-4 py-2 text-sm text-gray-700'])}
                               >
                                 Users
                               </Link>
@@ -229,8 +231,8 @@ export default function TopMenu() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
+                    item.current ? 'bg-gray-900 text-white' : ['text-gray-300 hover:bg-gray-700 hover:text-white',
+                      'block rounded-md px-3 py-2 text-base font-medium']
                   )}
                   aria-current={item.current ? 'page' : undefined}
                 >
