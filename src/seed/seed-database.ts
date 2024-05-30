@@ -22,7 +22,7 @@ export default async function main() {
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
   // ]);
-  
+
   const { categories, products, users } = initialData;
 
 
@@ -40,53 +40,48 @@ export default async function main() {
   // {
   //   name: 'Shirt'
   // }
-  const categoriesData = categories.map( (name) => ({ name }));
-  
+  const categoriesData = categories.map((name) => ({ name }));
+
   await prisma.category.createMany({
     data: categoriesData
   });
 
-  
+
   const categoriesDB = await prisma.category.findMany();
-  
-  const categoriesMap = categoriesDB.reduce( (map, category) => {
-    map[ category.name.toLowerCase()] = category.id;
+  console.log({ categoriesDB });
+  const categoriesMap = categoriesDB.reduce((map, category) => {
+    map[category.name.toLowerCase()] = category.id;
     return map;
   }, {} as Record<string, string>); //<string=shirt, string=categoryID>
-  
-  
+
+  console.log({ categoriesMap });
 
   // Productos
 
-  products.forEach( async(product) => {
+  products.forEach(async (product) => {
 
     const { type, images, ...rest } = product;
-
+    const newProduct = {
+      ...rest,
+      categoryId: categoriesMap[type]
+    };
     const dbProduct = await prisma.product.create({
-      data: {
-        ...rest,
-        categoryId: categoriesMap[type]
-      }
+      data: newProduct
     })
-
-
+    console.log({ newProduct });
+    console.log({ dbProduct });
     // Images
-    const imagesData = images.map( image => ({
+    const imagesData = images.map(image => ({
       url: image,
       productId: dbProduct.id
     }));
-
+    console.log({ imagesData });
     await prisma.productImage.createMany({
       data: imagesData
     });
 
   });
-
-
-
-
-
-  console.log( 'Seed ejecutado correctamente' );
+  console.log('Seed ejecutado correctamente');
 }
 
 
