@@ -68,6 +68,7 @@ export async function GET(request: Request) {
             url: image,
             productId: dbProduct.id
         }));
+        console.log('imagesData', imagesData);
         const imagesResponse = await prisma.productImage.createMany({
             data: imagesData
         });
