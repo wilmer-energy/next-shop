@@ -29,7 +29,30 @@ export async function GET(request: Request) {
     await prisma.user.createMany({
         data: users
     });
-
+    // Productos
+    console.log("productos", products);
+    products.forEach(async (product) => {
+        const { type, images, ...rest } = product;
+        console.log("images", images);
+        const newProduct = {
+            ...rest,
+            categoryId: categoriesMap[type]
+        };
+        console.log('newProduct: ', newProduct);
+        const dbProduct = await prisma.product.create({
+            data: newProduct
+        })
+        console.log('dbProduct', dbProduct);
+        // Images
+        const imagesData = images.map(image => ({
+            url: image,
+            productId: dbProduct.id
+        }));
+        const imagesResponse = await prisma.productImage.createMany({
+            data: imagesData
+        });
+        console.log({ imagesResponse });
+    });
     await prisma.country.createMany({
         data: countries
     });
@@ -56,47 +79,6 @@ export async function GET(request: Request) {
     }, {} as Record<string, string>); //<string=shirt, string=categoryID>
 
     console.log({ categoriesMap });
-
-    // Productos
-    console.log("productos", products);
-    products.forEach(async (product) => {
-        const { type, images, ...rest } = product;
-        console.log("images", images);
-        const newProduct = {
-            ...rest,
-            categoryId: categoriesMap[type]
-        };
-        console.log('newProduct: ', newProduct);
-        const dbProduct = await prisma.product.create({
-            data: newProduct
-        })
-        console.log('dbProduct', dbProduct);
-        // Images
-        const imagesData = images.map(image => ({
-            url: image,
-            productId: dbProduct.id
-        }));
-        const imagesResponse = await prisma.productImage.createMany({
-            data: imagesData
-        });
-        console.log({ imagesResponse });
-    });
-    /*
-    const productsForSave = products.map((product) => {
-        const { type, images, ...rest } = product;
-        const newProduct = {
-            ...rest,
-            categoryId: categoriesMap[type],
-        };
-        return newProduct;
-    });
-    console.log({ productsForSave });
-    if (productsForSave.length > 0) {
-        const response = await prisma.product.createMany({
-            data: productsForSave
-        });
-        console.log(response);
-    }*/
     console.log('Seed ejecutado correctamente');
     return NextResponse.json({ message: 'Seed Executed' });
 }
