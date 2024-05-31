@@ -16,6 +16,7 @@ export async function GET(request: Request) {
     await prisma.category.createMany({
         data: categoriesData
     });
+    
     const categoriesDB = await prisma.category.findMany();
     console.log({ categoriesDB });
     console.log("test");
