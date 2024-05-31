@@ -30,6 +30,26 @@ export async function GET(request: Request) {
         data: users
     });
     // Productos
+       //  Categorias
+    // {
+    //   name: 'Shirt'
+    // }
+    const categoriesData = categories.map((name) => ({ name }));
+    console.log({ categoriesData });
+    await prisma.category.createMany({
+        data: categoriesData
+    });
+
+
+    const categoriesDB = await prisma.category.findMany();
+    console.log({ categoriesDB });
+    console.log("test");
+    const categoriesMap = categoriesDB.reduce((map, category) => {
+        map[category.name.toLowerCase()] = category.id;
+        return map;
+    }, {} as Record<string, string>); //<string=shirt, string=categoryID>
+
+    console.log({ categoriesMap });
     console.log("productos", products);
     products.forEach(async (product) => {
         const { type, images, ...rest } = product;
@@ -56,29 +76,6 @@ export async function GET(request: Request) {
     await prisma.country.createMany({
         data: countries
     });
-
-
-
-    //  Categorias
-    // {
-    //   name: 'Shirt'
-    // }
-    const categoriesData = categories.map((name) => ({ name }));
-    console.log({ categoriesData });
-    await prisma.category.createMany({
-        data: categoriesData
-    });
-
-
-    const categoriesDB = await prisma.category.findMany();
-    console.log({ categoriesDB });
-    console.log("test");
-    const categoriesMap = categoriesDB.reduce((map, category) => {
-        map[category.name.toLowerCase()] = category.id;
-        return map;
-    }, {} as Record<string, string>); //<string=shirt, string=categoryID>
-
-    console.log({ categoriesMap });
     console.log('Seed ejecutado correctamente');
     return NextResponse.json({ message: 'Seed Executed' });
 }
