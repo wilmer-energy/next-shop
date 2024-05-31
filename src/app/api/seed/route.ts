@@ -58,7 +58,7 @@ export async function GET(request: Request) {
     console.log({ categoriesMap });
 
     // Productos
-
+    console.log("producto 0",products[0]);
     products.forEach(async (product) => {
         const { type, images, ...rest } = product;
         const newProduct = {
