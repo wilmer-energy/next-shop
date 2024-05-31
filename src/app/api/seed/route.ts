@@ -64,9 +64,9 @@ export async function GET(request: Request) {
         console.log("images", images);
         const newProduct = {
             ...rest,
-            categoryId: categoriesMap[type],
-            id: ''
+            categoryId: categoriesMap[type]
         };
+        console.log('newProduct: ', newProduct);
         const dbProduct = await prisma.product.create({
             data: newProduct
         })
