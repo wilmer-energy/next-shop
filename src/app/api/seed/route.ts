@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import prisma from '@/lib/prisma';
 import { initialData } from './seed';
 import { countries } from './seed-countries';
+import { Gender, Product, Size } from '@prisma/client';
 
 export async function GET(request: Request) {
     // 1. Borrar registros previos
@@ -59,28 +60,42 @@ export async function GET(request: Request) {
     // Productos
 
     products.forEach(async (product) => {
-
         const { type, images, ...rest } = product;
         const newProduct = {
             ...rest,
-            categoryId: categoriesMap[type]
+            categoryId: categoriesMap[type],
+            id: ''
         };
         const dbProduct = await prisma.product.create({
             data: newProduct
         })
-        console.log({ newProduct });
         console.log({ dbProduct });
         // Images
         const imagesData = images.map(image => ({
             url: image,
             productId: dbProduct.id
         }));
-        console.log({ imagesData });
-        await prisma.productImage.createMany({
+        const imagesResponse = await prisma.productImage.createMany({
             data: imagesData
         });
-
+        console.log({ imagesResponse });
     });
+    /*
+    const productsForSave = products.map((product) => {
+        const { type, images, ...rest } = product;
+        const newProduct = {
+            ...rest,
+            categoryId: categoriesMap[type],
+        };
+        return newProduct;
+    });
+    console.log({ productsForSave });
+    if (productsForSave.length > 0) {
+        const response = await prisma.product.createMany({
+            data: productsForSave
+        });
+        console.log(response);
+    }*/
     console.log('Seed ejecutado correctamente');
     return NextResponse.json({ message: 'Seed Executed' });
 }
