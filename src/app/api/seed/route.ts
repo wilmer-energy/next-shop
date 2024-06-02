@@ -18,12 +18,6 @@ export async function GET(request: Request) {
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
   const { categories, products, users } = initialData;
-  await prisma.user.createMany({
-    data: users
-  });
-  await prisma.country.createMany({
-    data: countries
-  });
   const categoriesData = categories.map( (name) => ({ name }));
   await prisma.category.createMany({
     data: categoriesData
@@ -54,6 +48,12 @@ export async function GET(request: Request) {
       data: imagesData
     });
 
+  });
+  await prisma.user.createMany({
+    data: users
+  });
+  await prisma.country.createMany({
+    data: countries
   });
   console.log( 'Seed ejecutado correctamente' );
     return NextResponse.json({ message: 'Seed Executed' });
